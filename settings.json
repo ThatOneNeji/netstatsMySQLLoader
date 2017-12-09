@@ -1,0 +1,38 @@
+{
+    "amqp": {
+        "server": "192.168.72.250",
+        "user": "mysqlloader",
+        "password": "mysqlloader",
+        "queuename": "netflow/mysql/data"
+    },
+    "logger": {
+        "appenders": {
+            "out": {
+                "type": "console"
+            },
+            "task": {
+                "type": "dateFile",
+                "filename": "logs/wugmsNodeMySQLLoader",
+                "pattern": "-dd.log",
+                "alwaysIncludePattern": true
+            }
+        },
+        "categories": {
+            "default": {
+                "appenders": ["out", "task"],
+                "level": "debug"
+            },
+            "task": {
+                "appenders": ["task"],
+                "level": "info"
+            }
+        }
+    },
+    "database": {
+        "username": "mcnms",
+        "password": "mcnms",
+        "schema": "mcnms",
+        "host": "192.168.72.1",
+        "port": 3306
+    }
+}

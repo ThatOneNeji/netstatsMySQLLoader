@@ -1,9 +1,9 @@
 {
     "amqp": {
-        "server": "192.168.72.250",
+        "server": "127.0.0.1",
         "user": "netstatsNodeMySQLLoader",
         "password": "netstatsNodeMySQLLoader",
-        "queuename": "netstats/mysql/data"
+        "consumeQueueName": "netstats/mysql/data"
     },
     "logger": {
         "appenders": {

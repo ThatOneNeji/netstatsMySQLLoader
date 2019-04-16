@@ -1,6 +1,6 @@
 {
     "amqp": {
-        "server": "127.0.0.1",
+        "server": "192.168.72.23",
         "user": "netstatsNodeMySQLLoader",
         "password": "netstatsNodeMySQLLoader",
         "consumeQueueName": "netstats/mysql/data"
@@ -29,7 +29,7 @@
         }
     },
     "database": {
-        "connectionLimit": 5,
+        "connectionLimit": 3,
         "user": "mcnms",
         "password": "mcnms",
         "database": "mcnms",

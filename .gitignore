@@ -6,3 +6,10 @@
 # Ignore coverage results
 /coverage/
 .coveralls.yml
+/docs
+/__lib
+/2019091412_ping.sql
+/2019091323_cron.sql
+/2019091323_nslookup.sql
+/2019091412_cron.sql
+/2019091412_nslookup.sql

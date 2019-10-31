@@ -1,25 +1,35 @@
 {
-  "name": "netstatsNodeMySQLLoader",
-  "version": "1.0.2",
-  "keywords": [
-    "util",
-    "functional",
-    "server",
-    "client",
-    "browser"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ThatOneNeji/netstatsNodeMySQLLoader.git"
-  },
-  "description": "MySQL Loader",
-  "license": "MIT",
-  "author": "ThatOneNeji",
-  "contributors": [],
-  "dependencies": {
-    "amqplib": "^0.5.3",
-    "log4js": "^4.0.2",
-    "moment": "^2.24.0",
-    "mysql": "^2.16.0"
-  }
+    "name": "netstatsNodeMySQLLoader",
+    "version": "1.0.2",
+    "keywords": [
+        "util",
+        "functional",
+        "server",
+        "client",
+        "browser"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ThatOneNeji/netstatsNodeMySQLLoader.git"
+    },
+    "description": "MySQL Loader",
+    "license": "MIT",
+    "author": "ThatOneNeji",
+    "contributors": [],
+    "dependencies": {
+        "amqp-connection-manager": "latest",
+        "amqplib": "latest",
+        "log4js": "latest",
+        "moment": "latest",
+        "mysql": "latest",
+        "netmask": "latest"
+    },
+    "main": "server.js",
+    "scripts": {
+        "postinstall": "./node_modules/.bin/jsdoc -d docs server.js"
+    },
+    "devDependencies": {
+        "eslint": "^6.3.0",
+        "jsdocs": "^1.0.0"
+    }
 }

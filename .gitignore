@@ -13,3 +13,6 @@
 /2019091323_nslookup.sql
 /2019091412_cron.sql
 /2019091412_nslookup.sql
+/lib/node_modules
+/lib/_tmp
+/lib/package-lock.json

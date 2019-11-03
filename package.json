@@ -10,7 +10,7 @@
     ],
     "repository": {
         "type": "git",
-        "url": "https://github.com/ThatOneNeji/netstatsNodeMySQLLoader.git"
+        "url": "https://github.com/ThatOneNeji/netstatsMySQLLoader.git"
     },
     "description": "MySQL Loader",
     "license": "MIT",

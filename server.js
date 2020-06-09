@@ -42,7 +42,7 @@ var logging = require('./lib/logger.js');
  * @function MessageBroker
  * @description description
  */
-var Common = require('./lib/common.js');
+var Common = require('./lib/nejiutils.js');
 
 /**
  * @function MessageBroker
@@ -247,4 +247,5 @@ function receiveHandler(msg) {
             }
         }
     });
+    return true;
 }

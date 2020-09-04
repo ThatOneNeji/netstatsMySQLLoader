@@ -9,7 +9,7 @@
     "plugins": ["plugins/markdown"],
     "templates": {
         "cleverLinks": false,
-        "systemName": "mtrext",
+        "systemName": "netstatsMySQLLoader",
         "monospaceLinks": false,
         "dateFormat": "YYYY/MM/DD",
         "navType": "inline",

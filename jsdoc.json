@@ -4,12 +4,13 @@
     },
     "source": {
         "includePattern": ".+\\.js(doc|x)?$",
-        "excludePatterns": "(^|\\/|\\\\)"
+        "exclude": ["node_modules", "lib/node_modules"],
+        "excludePatterns": "(^|\\/|\\\\|node_modules)"
     },
     "plugins": ["plugins/markdown"],
     "templates": {
         "cleverLinks": false,
-        "systemName": "netstatsMySQLLoader",
+        "systemName": "netstats - MySQL Loader",
         "monospaceLinks": false,
         "dateFormat": "YYYY/MM/DD",
         "navType": "inline",

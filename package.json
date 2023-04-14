@@ -1,6 +1,6 @@
 {
-    "name": "netstatsMySQLLoader",
-    "version": "1.0.2",
+    "name": "netstatsmysqlloader",
+    "version": "2.0.1",
     "keywords": [
         "util",
         "functional",
@@ -17,12 +17,10 @@
     "author": "ThatOneNeji",
     "contributors": [],
     "dependencies": {
-        "amqp-connection-manager": "^3.7.0",
-        "amqplib": "^0.8.0",
-        "log4js": "^6.3.0",
-        "moment": "^2.29.1",
+        "commonfunctions": "github:ThatOneNeji/CommonFunctions",
+        "moment": "^2.29.4",
         "mysql": "^2.18.1",
-        "netmask": "^2.0.2"
+        "mysql2": "^2.3.3"
     },
     "main": "server.js",
     "scripts": {
@@ -30,8 +28,8 @@
         "lint": "./node_modules/.bin/eslint lib/*.js server.js"
     },
     "devDependencies": {
-        "eslint": "^8.0.1",
+        "eslint": "^8.22.0",
         "ink-docstrap": "^1.3.2",
-        "jsdoc": "^3.6.7"
+        "jsdoc": "^3.6.11"
     }
 }

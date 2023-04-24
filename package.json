@@ -20,7 +20,7 @@
         "commonfunctions": "github:ThatOneNeji/CommonFunctions",
         "moment": "^2.29.4",
         "mysql": "^2.18.1",
-        "mysql2": "^2.3.3"
+        "mysql2": "^3.2.1"
     },
     "main": "server.js",
     "scripts": {
@@ -28,8 +28,8 @@
         "lint": "./node_modules/.bin/eslint lib/*.js server.js"
     },
     "devDependencies": {
-        "eslint": "^8.22.0",
+        "eslint": "^8.38.0",
         "ink-docstrap": "^1.3.2",
-        "jsdoc": "^3.6.11"
+        "jsdoc": "^4.0.2"
     }
 }

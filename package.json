@@ -18,18 +18,18 @@
     "contributors": [],
     "dependencies": {
         "commonfunctions": "github:ThatOneNeji/CommonFunctions",
-        "moment": "^2.29.4",
+        "moment": "^2.30.1",
         "mysql": "^2.18.1",
-        "mysql2": "^3.6.5"
+        "mysql2": "^3.12.0"
     },
     "main": "server.js",
     "scripts": {
-        "documentation": "./node_modules/.bin/jsdoc -c jsdoc.json server.js lib/logger.js lib/messagebroker.js lib/nejiutils.js",
-        "lint": "./node_modules/.bin/eslint lib/*.js server.js"
+        "documentation": "./node_modules/.bin/jsdoc -c jsdoc.json server.js",
+        "lint": "./node_modules/.bin/eslint server.js"
     },
     "devDependencies": {
-        "eslint": "^8.56.0",
+        "eslint": "^9.18.0",
         "ink-docstrap": "^1.3.2",
-        "jsdoc": "^4.0.2"
+        "jsdoc": "^4.0.4"
     }
 }

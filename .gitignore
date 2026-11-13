@@ -2,7 +2,7 @@
 /logs/
 /node_modules/
 /package-lock.json
- 
+
 # Ignore coverage results
 /coverage/
 .coveralls.yml
@@ -18,3 +18,5 @@
 /lib/package-lock.json
 /documentation
 /tmp
+config.json
+configuration/*.json

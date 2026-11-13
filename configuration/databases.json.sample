@@ -1,0 +1,10 @@
+{
+    "database": {
+        "connectionLimit": 1,
+        "user": "dummy_user",
+        "password": "dummy_password",
+        "schema": "dummy_database",
+        "host": "dummy-db",
+        "port": 3306
+    }
+}

@@ -1,6 +1,6 @@
 {
     "name": "netstatsmysqlloader",
-    "version": "2.0.1",
+    "version": "2.1.1",
     "keywords": [
         "util",
         "functional",
@@ -17,10 +17,10 @@
     "author": "ThatOneNeji",
     "contributors": [],
     "dependencies": {
-        "commonfunctions": "github:ThatOneNeji/CommonFunctions",
-        "moment": "^2.30.1",
+        "commonfunctions": "github:ThatOneNeji/CommonFunctions#semver:^1.9.5",
+        "moment": "^2.31.0",
         "mysql": "^2.18.1",
-        "mysql2": "^3.12.0"
+        "mysql2": "^3.24.6"
     },
     "main": "server.js",
     "scripts": {
@@ -28,8 +28,10 @@
         "lint": "./node_modules/.bin/eslint server.js"
     },
     "devDependencies": {
-        "eslint": "^9.18.0",
+        "eslint": "^10.14.0",
+        "eslint-config-google": "^0.14.0",
         "ink-docstrap": "^1.3.2",
-        "jsdoc": "^4.0.4"
+        "jsdoc": "^4.0.5",
+        "taffydb": "npm:@jsdoc/salty@^0.2.12"
     }
 }

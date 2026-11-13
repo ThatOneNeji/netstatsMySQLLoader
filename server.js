@@ -31,12 +31,24 @@
  */
 let appConfig;
 
+/**
+ * @property {string} cfgPath
+ * @description This is the path to the configuration files
+ */
+const cfgPath = './configuration';
+
+/**
+ * @property {array} cfgFiles
+ * @description This is the list of configuration files that are loaded during startup
+ */
+const cfgFiles = ['./configuration/logging.json', './configuration/databases.json', './configuration/messagebrokers.json'];
+
 /* Load internal libraries */
 const Logger = require('commonfunctions').Logger;
 
 const MessageBroker = require('commonfunctions').MessageBroker;
 const messagebroker = new MessageBroker();
-const fs = require('fs');
+const fs = require('node:fs');
 const moment = require('moment');
 const mysql = require('mysql2');
 
@@ -54,14 +66,29 @@ function bail(err) {
 
 
 /**
- * @function loadConfigurationFile
+ * @function loadConfigurationFiles
  * @description Reads configuration from local file
  */
-function loadConfigurationFile() {
-    try {
-        appConfig = JSON.parse(fs.readFileSync('./config.json', 'utf8'));
-    } catch (err) {
-        bail(err);
+function loadConfigurationFiles() {
+    if (fs.existsSync(cfgPath)) {
+        for (const cfgFile of cfgFiles) {
+            try {
+                const cfgData = JSON.parse(fs.readFileSync(cfgFile, 'utf8'));
+                if (cfgFile.includes('logging.json')) {
+                    appConfig = Object.assign({}, appConfig, {logging: cfgData.logging, logger: cfgData.logger});
+                } else if (cfgFile.includes('messagebrokers.json')) {
+                    appConfig = Object.assign({}, appConfig, {messagebrokers: cfgData.messagebrokers, queues: cfgData.queues, credentials: cfgData.credentials});
+                } else if (cfgFile.includes('databases.json')) {
+                    appConfig = Object.assign({}, appConfig, {
+                        database: cfgData.database || {}
+                    });
+                }
+            } catch (err) {
+                bail(err);
+            }
+        }
+    } else {
+        bail('The configuration directory does not exist(' + cfgPath + '), please create it and add the required configuration files');
     }
 }
 
@@ -70,7 +97,7 @@ function loadConfigurationFile() {
  * @description Starts up the application
  */
 function initialiseApplication() {
-    loadConfigurationFile();
+    loadConfigurationFiles();
     const emptyArray = [];
     Logging = new Logger(appConfig.logging);
     if (appConfig.skip) {
@@ -131,12 +158,16 @@ process.on('uncaughtException', (error) => {
 });
 
 /**
- * @typedef {Object} messageBrokerServerSettings
- * @property {string} host Host name or address to use
+ * @typedef {Object} messageBrokerCredentials
  * @property {string} user Username to use
  * @property {string} password Pasword for above listed username
- * @property {string} port Port for host (optional)
  * @property {string} vhost The vhost to use (optional)
+ * @description This object contains the credential information for the message broker sub system
+ */
+/**
+ * @typedef {Object} messageBrokerServerSettings
+ * @property {string} host Host name or address to use
+ * @property {string} port Port for host (optional)
  * @property {string} active If this host should be used or not (optional)
  * @description This object contains the configuration information for the message broker sub system
  */
@@ -144,6 +175,7 @@ process.on('uncaughtException', (error) => {
  * @typedef {Object} messageBrokerOptions
  * @property {function} logger Logger to pass on to the messagebroker so that it can log messages
  * @property {messageBrokerServerSettings} config Configuration for the RabbitMQ server
+ * @property {messageBrokerCredentials} credentials Credentials for the message broker
  * @property {string} receiveQueue This is the queue to consume from
  * @property {string} receiveQueueName This is the name of the consume instance
  * @property {function} externalHandover This function is called from the message broker in order to action incoming data
@@ -151,6 +183,7 @@ process.on('uncaughtException', (error) => {
 const messageBrokerOptions = {
     logger: Logging.messagebroker,
     config: appConfig.messagebrokers,
+    credentials: appConfig.credentials,
     receiveQueue: appConfig.queues.consumeBaseName,
     externalHandover: receiveHandler
 };
@@ -253,7 +286,7 @@ function writeData(data, service, sql = '') {
     let filemessage;
     if (data.sql) {
         if (data.sql.constructor === String) {
-            datastring = data.sql.replace(/;/g, ';\r\n');
+            datastring = data.sql.replaceAll(';', ';\r\n');
         } else {
             datastring = JSON.stringify(data.sql) + '\r\n';
         }
@@ -266,7 +299,7 @@ function writeData(data, service, sql = '') {
     }
     if (sql) {
         if (sql.constructor === String) {
-            datastring = sql.replace(/;/g, ';\r\n');
+            datastring = sql.replaceAll(';', ';\r\n');
         } else {
             datastring = JSON.stringify(sql) + '\r\n';
         }
@@ -291,7 +324,7 @@ function writeDataV2(data, payload, sql = '') {
     let filemessage;
     if (data.sql) {
         if (data.sql.constructor === String) {
-            datastring = data.sql.replace(/;/g, ';\r\n');
+            datastring = data.sql.replaceAll(/;$/g, ';\r\n');
         } else {
             datastring = JSON.stringify(data.sql) + '\r\n';
         }
@@ -304,7 +337,7 @@ function writeDataV2(data, payload, sql = '') {
     }
     if (sql) {
         if (sql.constructor === String) {
-            datastring = sql.replace(/;/g, ';\r\n');
+            datastring = sql.replaceAll(/;$/g, ';\r\n');
         } else {
             datastring = JSON.stringify(sql) + '\r\n';
         }
@@ -354,9 +387,9 @@ function parseSQLResults(servicename, results) {
 }
 
 /**
- * 
- * @param {string} line 
- * @return {string} 
+ *
+ * @param {string} line
+ * @return {string}
  */
 function getRDate(line) {
     const regPattern = new RegExp(/\('(?<year>[\d]+)-(?<month>[\d]+)-(?<day>[\d]+)\s(?<hour>[\d]+)/gmi);
@@ -390,11 +423,7 @@ function checkPayload(payload) {
             newPayload.sql = payload.content.name;
         }
     }
-
     newPayload.rdate = getRDate(newPayload.sql);
-    if (!newPayload.rdate) {
-        newPayload.rdate = moment().format('YYYYMMDDHH');
-    }
     return newPayload;
 }
 
@@ -440,7 +469,7 @@ function receiveHandler(queuemessage) {
             pool.query(payload.sql, function (error, results, fields) {
                 if (error) {
                     Logging.mysql.error('Service: "' + payload.service + '" results: ' + buildResultString(error));
-                    writeDataV2(error, payload, payload.sql);
+                    writeDataV2(error, payload);
                     if (fields) {
                         Logging.mysql.debug(fields);
                     }

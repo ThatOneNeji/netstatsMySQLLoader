@@ -4,20 +4,29 @@
     },
     "source": {
         "includePattern": ".+\\.js(doc|x)?$",
-        "exclude": ["node_modules", "lib/node_modules"],
-        "excludePatterns": "(^|\\/|\\\\|node_modules)"
+        "exclude": [
+            "node_modules",
+            "lib/node_modules",
+            "documentation",
+            "eslint.config.js"
+        ]
     },
-    "plugins": ["plugins/markdown"],
+    "plugins": [
+        "plugins/markdown"
+    ],
     "templates": {
-        "cleverLinks": false,
         "systemName": "netstats - MySQL Loader",
-        "monospaceLinks": false,
-        "dateFormat": "YYYY/MM/DD",
+        "footer": "",
+        "copyright": "",
+        "includeDate": true,
         "navType": "inline",
         "theme": "slate",
         "linenums": true,
-        "footer": "",
+        "collapseSymbols": false,
         "inverseNav": false,
+        "dateFormat": "YYYY/MM/DD",
+        "cleverLinks": false,
+        "monospaceLinks": false,
         "default": {
             "outputSourceFiles": true
         }
